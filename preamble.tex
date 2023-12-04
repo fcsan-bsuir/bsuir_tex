@@ -719,14 +719,14 @@
 % Зачем: создание заголовка приложения
 % Параметры:
 %% #1 - Заголовок приложения
-\newcommand{\annex}[1]{
+\newcommand{\annex}[2]{
   \newpage
   \stepcounter{equation_annex}
   \centerline{\textbf{ПРИЛОЖЕНИЕ \annexAlph{equation_annex}}}
-  \centerline{(\it{обязательное})}
+  \centerline{(\it{#1})}
   \vspace{\baselineskip}
-  \addtocline{section}{ПРИЛОЖЕНИЕ \annexAlph{equation_annex}}
-  \centerline{#1}
+  \addtocline{section}{Приложение \annexAlph{equation_annex} (#1) #2}
+  \centerline{#2}
 }
 
 % Зачем: вывод количества приложений с окончанием
