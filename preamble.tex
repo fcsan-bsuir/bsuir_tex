@@ -119,10 +119,40 @@
 % Зачем: Определяет отступы слева для записей в таблице содержания.
 % Почему: Пункт 2.2.7 Требований по оформлению пояснительной записки.
 \makeatletter
-\renewcommand{\l@section}{\@dottedtocline{1}{0.5em}{1.2em}}
-\renewcommand{\l@subsection}{\@dottedtocline{2}{1.7em}{2.0em}}
+\renewcommand{\cftsecfillnum}[1]
+{%
+    \ifnum#1<10%
+    \gdef\@pnumwidth{6pt}%
+    \else%
+    \ifnum#1<100%
+    \gdef\@pnumwidth{14pt}%
+    \else%
+    \gdef\@pnumwidth{18pt}%
+    \fi\fi%
+    {\cftsecleader}\nobreak%
+    \makebox[\@pnumwidth][\cftpnumalign]{\cftsecpagefont #1}\cftsecafterpnum\par%
+}
 
-\makeatother
+\renewcommand{\cftsubsecfillnum}[1]
+{%
+    \ifnum#1<10%
+    \gdef\@pnumwidth{6pt}%
+    \else%
+    \ifnum#1<100%
+    \gdef\@pnumwidth{14pt}%
+    \else%
+    \gdef\@pnumwidth{18pt}%
+    \fi\fi%
+    {\cftsecleader}\nobreak%
+    \makebox[\@pnumwidth][\cftpnumalign]{\cftsubsecpagefont #1}\cftsubsecafterpnum\par%
+}
+\makeatother  
+
+\renewcommand{\cftsecleader}{\cftdotfill{\cftsecdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftsubsecdotsep}}
+
+\renewcommand\cftsecdotsep{\cftdot}
+\renewcommand\cftsubsecdotsep{\cftdot}
 
 
 % Зачем: Работа с колонтитулами
