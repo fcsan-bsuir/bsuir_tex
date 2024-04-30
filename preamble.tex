@@ -347,12 +347,17 @@
 \DeclareCaptionLabelFormat{stbfigure}{\\Рисунок \arabic{section}.\arabic{figure}}
 \DeclareCaptionLabelFormat{stbsubfigure}{\\\asbuk{subfigure})}
 \DeclareCaptionLabelFormat{stbtable}{Таблица \arabic{section}.\arabic{table}}
+\DeclareCaptionLabelFormat{stbtableContinuation}{Продолжение таблицы \arabic{section}.\arabic{table}}
 \DeclareCaptionLabelSeparator{stb}{~--~}
 \captionsetup{labelsep=stb}
 \captionsetup[figure]{labelformat=stbfigure,justification=centering,aboveskip=7pt,belowskip=-7pt}
 \captionsetup[subfigure]{labelformat=stbsubfigure}
 % format=... based on https://tex.stackexchange.com/a/185788/139966
 \captionsetup[table]{labelformat=stbtable,justification=raggedright,aboveskip=0pt,format=hang}
+\newcommand{\continueTableCaption}{
+    \captionsetup{labelformat=stbtableContinuation,justification=raggedright,aboveskip=0pt,format=hang}
+    \caption{}
+}
 
 % Зачем: Окружения для оформления формул
 % Почему: Пункт 2.4.7 требований по оформлению пояснительной записки и специфические требования различных кафедр
