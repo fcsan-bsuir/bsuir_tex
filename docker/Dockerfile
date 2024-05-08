@@ -99,7 +99,8 @@ RUN tlmgr install \
   cleveref \
   float \ 
   pgf \ 
-  mathspec
+  mathspec \
+  gensymb
 
 
 RUN apk add --no-cache msttcorefonts-installer 
