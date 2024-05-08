@@ -74,11 +74,12 @@ RUN tlmgr install \
   caption \
   amsmath \
   amscls \
+  mathspec \
   enumitem \
   makecell \
   multirow \
   was \
-  sistyle \
+  SIstyle \
   xcolor \
   listings \
   ulem \
@@ -94,6 +95,9 @@ RUN tlmgr install \
   extsizes \
   fmtcount \
   koma-script \
+  pdflscape \
+  multibib \
+  cleveref \
   float \ 
   pgf \ 
   mathspec
