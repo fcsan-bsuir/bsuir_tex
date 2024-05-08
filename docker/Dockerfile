@@ -74,7 +74,6 @@ RUN tlmgr install \
   caption \
   amsmath \
   amscls \
-  mathspec \
   enumitem \
   makecell \
   multirow \
