@@ -78,7 +78,7 @@ RUN tlmgr install \
   makecell \
   multirow \
   was \
-  SIstyle \
+  sistyle \
   xcolor \
   listings \
   ulem \
