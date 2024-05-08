@@ -95,7 +95,8 @@ RUN tlmgr install \
   fmtcount \
   koma-script \
   float \ 
-  pgf 
+  pgf \ 
+  mathspec
 
 
 RUN apk add --no-cache msttcorefonts-installer 
