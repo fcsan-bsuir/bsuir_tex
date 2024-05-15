@@ -63,6 +63,7 @@ RUN tlmgr install \
   datetime \
   nomencl \
   \
+  gensymb \
   geometry \
   setspace \
   footmisc \
@@ -99,8 +100,7 @@ RUN tlmgr install \
   cleveref \
   float \ 
   pgf \ 
-  mathspec \
-  gensymb
+  mathspec
 
 
 RUN apk add --no-cache msttcorefonts-installer 
