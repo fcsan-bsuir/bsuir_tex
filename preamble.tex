@@ -320,6 +320,12 @@
 \setlength{\belowcaptionskip}{0pt}
 \setlength{\abovecaptionskip}{0pt}
 
+% Зачем: отступы в формулах
+\AtBeginDocument{\setlength\abovedisplayskip{1em}}
+\AtBeginDocument{\setlength\belowdisplayskip{1em}}
+\AtBeginDocument{\setlength\abovedisplayshortskip{1em}}
+\AtBeginDocument{\setlength\belowdisplayshortskip{1em}}
+
 % Зачем: убирает отступ до формулы (полезно для новых страниц)
 %% #1 - baseline skip scale (2 by default)
 \newcommand\removeEquantionBeforeSpace[1][2]{
@@ -385,19 +391,14 @@
 \usepackage{tabularx}
 
 \newenvironment{explanation}
-    {
-    %%% Следующие строки определяют специфические требования разных редакций стандартов. Раскомментируйте нужные 2 строки
-    %% стандартный абзац, СТП-01 2010
-    %\par
-    %\tabularx{\textwidth-\fivecharsapprox}{@{}ll@{ --- } X }
-    %% без отступа, СТП-01 2013
-    \noindent
-    \tabularx{\textwidth}{@{}ll@{ --- } X }
-    }
-    {
-    \\[\parsep]
-    \endtabularx
-    }
+{
+    \setlength{\tabcolsep}{0em}
+    \noindent\hspace{-1.8ex}
+    \tabularx{\linewidth}{p{\fivecharsapprox}l@{ -- }X }
+}
+{
+    \endtabularx\\[\parsep]
+}
 
 
 % Зачем: Окружения <<теорема>>, <<лемма>>
@@ -476,10 +477,6 @@
 
 % Зачем: Включение номера раздела в номер рисунка. Нумерация рисунков внутри раздела.
 \AtBeginDocument{\numberwithin{figure}{section}}
-
-\let\oldequation=\equation
-\let\endoldequation=\endequation
-\renewenvironment{equation}{\vspace{-0.3em}\begin{oldequation}}{\end{oldequation}\vspace{-0.9em}}
 
 % Зачем: Дополнительные возможности в форматировании таблиц
 \usepackage{makecell}
