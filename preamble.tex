@@ -258,14 +258,24 @@
 
 % Зачем: Задает стиль заголовков пунктов
 % Почему: Пункты 2.1.1, 2.2.5 и ПРИЛОЖЕНИЕ Л Требований по оформлению пояснительной записки.
-\makeatletter
-\renewcommand\subsubsection{
-  \@startsection{subsubsection}{3}%
-    {\fivecharsapprox}%
-    {-1em \@plus -1ex \@minus -.2ex}%
-    {\z@}%
-    {\raggedright\hyphenpenalty=10000\normalfont\normalsize\bfseries}}
-\makeatother
+\titleformat{\subsubsection}[runin]
+  {\pretolerance=10000\filright\normalfont}
+  {\bfseries\thesubsubsection}
+  % Зачем: отступ от номера до заголовка должен составлять 1 пробел.
+  % Для Times New Roman это приблизительно 0.5em
+  {0.5em}
+  {}
+  [\vspace*{0em}]
+
+% Отступы заголовка пункта
+\titlespacing{\subsubsection}
+  % First line margin
+  {\fivecharsapprox}
+  {1em plus 0em minus -1em}
+  {0em}
+
+\let\subsubsectionold=\subsubsection
+\def\subsubsection#1#{\subsubsectionold{#1}\mbox{}}
 
 % Используйте \paragraph для заголовка 4 уровня:
 % https://tex.stackexchange.com/a/60212/139966
