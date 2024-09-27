@@ -1,4 +1,4 @@
-% !TeX spellcheck = russian-aot-ieyo
+ %!TeX spellcheck = russian-aot-ieyo
 % Зачем: Определяет класс документа (То, как будет выглядеть документ)
 % Примечание: параметр draft помечает строки, вышедшие за границы страницы, прямоугольником, в финальной версии его нужно удалить.
 \documentclass[a4paper,14pt,russian,oneside,final]{extreport}
@@ -258,14 +258,45 @@
 
 % Зачем: Задает стиль заголовков пунктов
 % Почему: Пункты 2.1.1, 2.2.5 и ПРИЛОЖЕНИЕ Л Требований по оформлению пояснительной записки.
-\makeatletter
-\renewcommand\subsubsection{
-  \@startsection{subsubsection}{3}%
-    {\fivecharsapprox}%
-    {-1em \@plus -1ex \@minus -.2ex}%
-    {\z@}%
-    {\raggedright\hyphenpenalty=10000\normalfont\normalsize\bfseries}}
-\makeatother
+\titleformat{\subsubsection}[runin]
+  % Для диплома
+  {\pretolerance=10000\filright\normalfont}
+  % Для диссертации
+  % {\pretolerance=10000\filright\normalfont\bfseries\large}
+  {\bfseries\thesubsubsection}
+  % Зачем: отступ от номера до заголовка должен составлять 1 пробел.
+  % Для Times New Roman это приблизительно 0.5em
+  {0.5em}
+  {}
+  %[]
+  [\hspace*{0em}]
+
+\titlespacing{\subsubsection}
+  % First line margin
+  {\fivecharsapprox}
+  {1em plus 0em minus -1em}
+  {0em}
+
+
+% \usepackage{xifthen} TODO
+% \renewcommand{\subsubsection}[1][]{
+%     \subsubsectionold{#1}
+%     \ifthenelse{\isempty{#1}}%
+%     {}
+%     {\mbox{}}
+% }
+\let\subsubsectionold=\subsubsection
+\def\subsubsection#1#{\subsubsectionold{#1}\mbox{}}
+
+% \makeatletter
+% \renewcommand\subsubsection{
+%   \@startsection{subsubsection}{3}%
+%     {\fivecharsapprox}%
+%     {-1em \@plus -1ex \@minus -.2ex}%
+%     {\z@}%
+%     {\raggedright\hyphenpenalty=10000\normalfont\normalsize}}
+% \makeatother
+
 
 % Используйте \paragraph для заголовка 4 уровня:
 % https://tex.stackexchange.com/a/60212/139966
@@ -320,6 +351,11 @@
 \setlength{\belowcaptionskip}{0pt}
 \setlength{\abovecaptionskip}{0pt}
 
+% \AtBeginDocument{\setlength\abovedisplayskip{1em}}
+% \AtBeginDocument{\setlength\belowdisplayskip{1em}}
+% \AtBeginDocument{\setlength\abovedisplayshortskip{1em}}
+% \AtBeginDocument{\setlength\belowdisplayshortskip{1em}}
+
 % Зачем: убирает отступ до формулы (полезно для новых страниц)
 %% #1 - baseline skip scale (2 by default)
 \newcommand\removeEquantionBeforeSpace[1][2]{
@@ -346,12 +382,14 @@
 % Почему: Пункт 2.5.5 Требований по оформлению пояснительной записки.
 \DeclareCaptionLabelFormat{stbfigure}{\\Рисунок \arabic{section}.\arabic{figure}}
 \DeclareCaptionLabelFormat{stbsubfigure}{\\\asbuk{subfigure})}
+\DeclareCaptionLabelFormat{stblisting}{\\Листинг \arabic{section}.\arabic{lstlisting}}
 \DeclareCaptionLabelFormat{stbtable}{Таблица \arabic{section}.\arabic{table}}
 \DeclareCaptionLabelFormat{stbtableContinuation}{Продолжение таблицы \arabic{section}.\arabic{table}}
 \DeclareCaptionLabelSeparator{stb}{~--~}
 \captionsetup{labelsep=stb}
 \captionsetup[figure]{labelformat=stbfigure,justification=centering,aboveskip=7pt,belowskip=-7pt}
 \captionsetup[subfigure]{labelformat=stbsubfigure}
+\captionsetup[lstlisting]{labelformat=stblisting,justification=centering,aboveskip=7pt}
 % format=... based on https://tex.stackexchange.com/a/185788/139966
 \captionsetup[table]{labelformat=stbtable,justification=raggedright,aboveskip=0pt,format=hang}
 \newcommand{\continueTableCaption}{
@@ -371,7 +409,7 @@
     %% стандартный абзац, СТП-01 2010
     %\begin{itemize}[leftmargin=0cm, itemindent=\parindent + \lengthWordWhere + \labelsep, labelsep=\labelsep]
     %% без отступа, СТП-01 2013
-    \begin{itemize}[leftmargin=0cm, itemindent=\lengthWordWhere + \labelsep , labelsep=\labelsep]%
+    \begin{itemize}[leftmargin=0cm, itemindent=\fivecharsapprox , labelsep=\labelsep]%
     %% СТП-2017
     %\begin{itemize}[justification=raggedright,aboveskip=0pt,format=hang,leftmargin=0cm, itemindent=\lengthWordWhere + \labelsep , labelsep=\labelsep]%
     \renewcommand\labelitemi{}%
@@ -386,17 +424,12 @@
 
 \newenvironment{explanation}
     {
-    %%% Следующие строки определяют специфические требования разных редакций стандартов. Раскомментируйте нужные 2 строки
-    %% стандартный абзац, СТП-01 2010
-    %\par
-    %\tabularx{\textwidth-\fivecharsapprox}{@{}ll@{ --- } X }
-    %% без отступа, СТП-01 2013
-    \noindent
-    \tabularx{\textwidth}{@{}ll@{ --- } X }
+    \setlength{\tabcolsep}{0em}
+    \noindent\hspace{-1.8ex}
+    \tabularx{\linewidth}{p{\fivecharsapprox}l@{ -- }X }
     }
     {
-    \\[\parsep]
-    \endtabularx
+    \endtabularx\\[\parsep]
     }
 
 
@@ -477,9 +510,38 @@
 % Зачем: Включение номера раздела в номер рисунка. Нумерация рисунков внутри раздела.
 \AtBeginDocument{\numberwithin{figure}{section}}
 
+% Зачем: Включение номера раздела в номер листинга. Нумерация листингов внутри раздела.
+\AtBeginDocument{\numberwithin{lstlisting}{section}}
+
+% \let\oldequation=\equation
+% \let\endoldequation=\endequation
+% \renewenvironment{equation}{\vspace{1em}\begin{oldequation}}{\end{oldequation}\vspace{1em}}
+\newlength\savedabovedisplayskip
+\newlength\savedbelowdisplayskip
+\newlength\savedabovedisplayshortskip
+\newlength\savedbelowdisplayshortskip
+
 \let\oldequation=\equation
 \let\endoldequation=\endequation
-\renewenvironment{equation}{\vspace{-0.3em}\begin{oldequation}}{\end{oldequation}\vspace{-0.9em}}
+\renewenvironment{equation}
+    {
+        \setlength\savedabovedisplayskip{\abovedisplayskip}
+        \setlength\savedbelowdisplayskip{\belowdisplayskip}
+        \setlength\savedabovedisplayshortskip{\abovedisplayshortskip}
+        \setlength\savedbelowdisplayshortskip{\belowdisplayshortskip}
+        \setlength\abovedisplayskip{1em}
+        \setlength\belowdisplayskip{1em}
+        \setlength\abovedisplayshortskip{1em}
+        \setlength\belowdisplayshortskip{1em}
+        \begin{oldequation}
+    }
+    {
+        \end{oldequation}
+        \setlength\abovedisplayskip{\savedabovedisplayskip}
+        \setlength\belowdisplayskip{\savedbelowdisplayskip}
+        \setlength\abovedisplayshortskip{\savedabovedisplayshortskip}
+        \setlength\belowdisplayshortskip{\savedbelowdisplayshortskip}
+    }
 
 % Зачем: Дополнительные возможности в форматировании таблиц
 \usepackage{makecell}
@@ -518,10 +580,14 @@
 \usepackage[final]{listings}
 
 \renewcommand{\lstlistingname}{Листинг}
-\lstdefinestyle{CodeListing}{aboveskip=1ex + 0.5em,
+\lstdefinestyle{CodeListing}{
+   aboveskip=1ex + 0.5em,
    belowskip=1ex + 0.5em,
+   %aboveskip=1em,
+   %belowskip=1em,
    xleftmargin=\fivecharsapprox,
-   basicstyle=\scriptsize\ttfamily,
+   %xleftmargin=0em,
+   basicstyle=\footnotesize\ttfamily,
    breaklines=true,
    % Убирает разрывы по запятым: https://tex.stackexchange.com/a/64782/139966
    % breakatwhitespace,
@@ -641,6 +707,7 @@
    % Убирает символы, по которым не делать разбивку: https://tex.stackexchange.com/a/140725/139966
    alsoletter={()[]},
    tabsize=8,
+   captionpos=b,
 }
 \lstset{style=cstyle}
 \let\OldTexttt\texttt
@@ -826,7 +893,7 @@
 \providecommand{\subparagraphformat}{}
 
 % Зачем: убирает нумерацию страниц на листах с содержанием
-\AtBeginDocument{\addtocontents{toc}{\protect\thispagestyle{empty}}}
+% \AtBeginDocument{\addtocontents{toc}{\protect\thispagestyle{empty}}}
 
 % Зачем: устанавливает отступ после рисунков
 %% Подробнее тут: https://tex.stackexchange.com/a/60479/139966
