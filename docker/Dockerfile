@@ -109,4 +109,4 @@ RUN update-ms-fonts
 
 RUN fc-cache -f
 
-RUN apk add --no-cache make
+RUN apk add --no-cache make g++
