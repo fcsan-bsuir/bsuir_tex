@@ -948,3 +948,17 @@
 % Зачем: добавляем пользовательские константы конфигурации
 % Всегда располагаем в конце для использования всех плагинов
 \input{\commonCfgPathPrefix cfg}
+
+% Зачем: правильные отступы включных формул в тексте
+\newlength{\eqindent}
+\setlength{\eqindent}{1.4em} % Recommended: baselineskip, 1.3em, 1.4em, 1.5em
+
+\usepackage{pgffor}
+
+% Note: if necessary, supplement the list with the necessary math environment
+\foreach \env in {equation, equation*, align, align*}{
+    \AtBeginEnvironment{\env}{\setlength\abovedisplayskip{\eqindent - \baselineskip}}
+    \AtBeginEnvironment{\env}{\setlength\belowdisplayskip{\eqindent}}
+    \AtBeginEnvironment{\env}{\setlength\abovedisplayshortskip{\eqindent - \baselineskip}}
+    \AtBeginEnvironment{\env}{\setlength\belowdisplayshortskip{\eqindent}}
+}
